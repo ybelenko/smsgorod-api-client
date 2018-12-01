@@ -1,0 +1,47 @@
+{
+    "name": "ybelenko/smsgorod-api-client",
+    "description": "Library for using SMSGateway service provided by SmsGorod.ru.",
+    "type": "library",
+	"license": "MIT",
+    "keywords": ["sms", "notifications", "api", "client-library", "sdk"],
+    "homepage": "https://smsgorod.ru",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Yuriy Belenko",
+            "email": "yura-bely@mail.ru"
+        }
+    ],
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "ext-curl": "*",
+        "lib-curl": "*",
+        "lib-libxml": "*",
+        "ext-SimpleXML": "*",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^2.8",
+        "phpunit/phpunit": "^5.7",
+        "overtrue/phplint": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ybelenko\\SmsGorod\\": "src/smsgorod/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ybelenko\\SmsGorod\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@phpunit",
+            "@phpcs"
+        ],
+        "phpunit": "phpunit",
+        "phpcs": "phpcs --extensions=php --ignore=*/vendor/*,*/tests/* --encoding=utf-8 src/ -p",
+        "phplint": "phplint src/ --exclude= vendor,tests --no-cache"
+    }
+}
