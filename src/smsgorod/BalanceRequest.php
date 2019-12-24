@@ -35,7 +35,7 @@ final class BalanceRequest extends ApiRequest implements XmlSerializable, \JsonS
     /**
      * URL сервиса для выполнения текущего запроса.
      */
-    const BALANCE_URL = 'http://web2.smsgorod.ru/xml/balance.php';
+    const BALANCE_URL = 'http://web.smsgorod.ru/xml/balance.php';
 
     /**
      * Логин в системе SmsGorod.

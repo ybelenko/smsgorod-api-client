@@ -35,7 +35,7 @@ final class MessageSendRequest extends ApiRequest implements XmlSerializable, \J
     /**
      * URL сервиса для выполнения текущего запроса.
      */
-    const SEND_URL = 'http://web2.smsgorod.ru/xml/';
+    const SEND_URL = 'http://web.smsgorod.ru/xml/';
 
     /**
      * Массив сообщений, которые будут отправлены.

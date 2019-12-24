@@ -35,7 +35,7 @@ final class StateRequest extends ApiRequest implements XmlSerializable, \JsonSer
     /**
      * URL сервиса для выполнения текущего запроса.
      */
-    const STATE_URL = 'http://web2.smsgorod.ru/xml/state.php';
+    const STATE_URL = 'http://web.smsgorod.ru/xml/state.php';
 
     /**
      * Массив с id сообщений статус которых нужно получить.

@@ -35,7 +35,7 @@ final class PhoneInfoRequest extends ApiRequest implements XmlSerializable, \Jso
     /**
      * URL сервиса для выполнения текущего запроса.
      */
-    const INFO_URL = 'http://web2.smsgorod.ru/xml/def.php';
+    const INFO_URL = 'http://web.smsgorod.ru/xml/def.php';
 
     /**
      * Массив с номерами телефона.

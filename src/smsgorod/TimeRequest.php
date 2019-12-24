@@ -35,7 +35,7 @@ final class TimeRequest extends ApiRequest implements XmlSerializable, \JsonSeri
     /**
      * URL сервиса для выполнения текущего запроса.
      */
-    const TIME_URL = 'http://web2.smsgorod.ru/xml/time.php';
+    const TIME_URL = 'http://web.smsgorod.ru/xml/time.php';
 
     /**
      * Логин в системе SmsGorod.
