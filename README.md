@@ -5,6 +5,9 @@
 [![Coverage Status](https://coveralls.io/repos/github/ybelenko/smsgorod-api-client/badge.svg?branch=master)](https://coveralls.io/github/ybelenko/smsgorod-api-client?branch=master)
 [![License](https://poser.pugx.org/ybelenko/smsgorod-api-client/license)](https://packagist.org/packages/ybelenko/smsgorod-api-client)
 
+Примечание от службы поддержки СМС Город:
+> :exclamation: Перед подключением данной клиентской библиотеки необходимо написать на <support@smsgorod.ru>. На основании ваших пожеланий, служба поддержки поможет выбрать соответствующий канал отправки сообщений.
+
 ## Требования
 - Любой вебсервер, например Apache
 - PHP ^5.6 || ^7.0
