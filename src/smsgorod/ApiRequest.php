@@ -49,9 +49,7 @@ abstract class ApiRequest
 
     /**
      * Выполняет POST запрос по указанному URL и возвращает ответ сервера.
-     *
      * Для корректной работы требуется расширение ext - curl.
-     *
      * @codeCoverageIgnore
      *
      * @param string $url Загружаемый URL.
@@ -91,16 +89,9 @@ abstract class ApiRequest
             case 'statusCode':
                 return $this->statusCode;
             default:
-                $trace = debug_backtrace();
-                trigger_error(
-                    'Undefined property via __get(): ' . $name .
-                    ' in ' . $trace[0]['file'] .
-                    ' on line ' . $trace[0]['line'],
-                    E_USER_NOTICE
+                throw new \InvalidArgumentException(
+                    sprintf('Переменной %s не существует', $name)
                 );
-                // @codeCoverageIgnoreStart
-                return null;
-                // @codeCoverageIgnoreEnd
         }
     }
 }

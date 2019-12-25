@@ -9,21 +9,24 @@ use PHPUnit\Framework\Error;
 use PHPUnit\Framework\Error\Notice;
 use Ybelenko\SmsGorod\ApiRequest;
 
+/**
+ * @coversDefaultClass \Ybelenko\SmsGorod\ApiRequest
+ */
 class ApiRequestTest extends TestCase{
 
     /**
-     * @covers Ybelenko\SmsGorod\ApiRequest::__get()
+     * @covers ::__get()
      */
-    public function testGetValues(){
-        $this->setExpectedException('PHPUnit_Framework_Error');
-        //PHPUnit_Framework_Error_Notice::$enabled = false;
+    public function testGetValues() {
         $request = $this->getMockForAbstractClass(ApiRequest::class);
-
         $this->assertNull($request->errno);
         $this->assertNull($request->error);
         $this->assertNull($request->statusCode);
-        $this->assertNull($request->unknown);
-    }
 
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Переменной unknown не существует');
+        $unknown = $request->unknown;
+        $this->assertNull($unknown);
+    }
 }
 ?>
