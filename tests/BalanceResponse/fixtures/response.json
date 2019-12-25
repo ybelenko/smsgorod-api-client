@@ -1,0 +1,46 @@
+{
+    "errno": 0,
+    "error": "",
+    "error_list": [],
+    "status_code": 200,
+    "sms": [
+        {
+            "area": "Россия",
+            "count": 22
+        },
+        {
+            "area": "МТС",
+            "count": 19
+        },
+        {
+            "area": "Мегафон",
+            "count": 19
+        },
+        {
+            "area": "Теле2",
+            "count": 19
+        },
+        {
+            "area": "Мотив",
+            "count": 42
+        },
+        {
+            "area": "Билайн",
+            "count": 21
+        },
+        {
+            "area": "SMARTS",
+            "count": 21
+        },
+        {
+            "area": "Остальные",
+            "count": 19
+        }
+    ],
+    "money": [
+        {
+            "currency": "RUB",
+            "value": 29.47
+        }
+    ]
+}
