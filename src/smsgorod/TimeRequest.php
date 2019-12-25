@@ -74,6 +74,7 @@ final class TimeRequest extends ApiRequest implements XmlSerializable, \JsonSeri
 
     /**
      * Выполняет запрос к АПИ.
+     * @codeCoverageIgnore
      *
      * @return TimeResponse
      */
@@ -114,15 +115,10 @@ final class TimeRequest extends ApiRequest implements XmlSerializable, \JsonSeri
      */
     public function jsonSerialize()
     {
-        $messageArray = [];
-        foreach ($this->messages as $message) {
-            $messageArray[] = $message->jsonSerialize();
-        }
         return [
             "security" => [
                 "login" => $this->login,
                 "password" => $this->password,
-                "message" => $messageArray
             ]
         ];
     }

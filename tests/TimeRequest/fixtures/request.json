@@ -1,0 +1,6 @@
+{
+    "security": {
+        "login": "логин",
+        "password": "пароль"
+    }
+}
