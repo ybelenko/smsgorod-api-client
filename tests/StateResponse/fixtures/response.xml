@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<response>
+    <state id_sms="2780243767" time="2015-10-27 14:46:51" price="1.45">deliver</state>
+    <state id_sms="2799892974" time="2016-03-26 05:11:06" price="1.52">deliver</state>
+    <state id_sms="2806791047" time="2016-05-21 05:29:14" price="1.1">deliver</state>
+    <state id_sms="2826561937" time="2016-10-15 08:59:51" price="1.49">deliver</state>
+    <state id_sms="2826561955" time="2016-10-15 09:00:22" price="1.49">deliver</state>
+    <state id_sms="1254578877" time="" price="1.49">Сообщение с таким ID не принималось</state>
+</response>
