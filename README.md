@@ -31,11 +31,36 @@ $ composer require ybelenko/smsgorod-api-client
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
-use \Ybelenko\SmsGorod\SmsGorod;
+use Ybelenko\SmsGorod\SmsGorod;
+use Ybelenko\SmsGorod\Message;
+use Ybelenko\SmsGorod\Abonent;
 
-$smsGorod = new SmsGorod($login, $password);
-$res = $smsGorod->getServerTime();
-echo "Current server time is " . $res->time;
+// здесь требуется подставить логин и папроль от сервиса SMSGorod
+$smsGorod = new SmsGorod('логин', 'пароль');
+$sender = 'VIRTA';
+$messageType = Message::SMS;
+$message = 'Hello World!';
+
+// отправляем смс сообщение одному абоненту при помощи запроса к апи
+$response = $smsGorod->sendMessage([
+    new Message(
+        $messageType,
+        $message,
+        [
+            // телефон получателя смс
+            new Abonent('79033256699'),
+
+            // одно сообщение могут получать несколько абонентов
+            // new Abonent('79033256699'),
+        ],
+        $sender
+    ),
+    // можно отправить несколько сообщений за один запрос
+    // new Message(),
+]);
+
+// ответ апи в формате JSON
+echo json_encode($response->sms, \JSON_PRETTY_PRINT);
 ```
 
 ## Запуск автоматических тестов
