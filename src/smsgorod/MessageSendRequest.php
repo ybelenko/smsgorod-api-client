@@ -83,6 +83,7 @@ final class MessageSendRequest extends ApiRequest implements XmlSerializable, \J
 
     /**
      * Выполняет запрос к АПИ.
+     * @codeCoverageIgnore
      *
      * @return MessageSendResponse
      */
@@ -134,16 +135,22 @@ final class MessageSendRequest extends ApiRequest implements XmlSerializable, \J
      */
     public function jsonSerialize()
     {
-        $messageArray = [];
-        foreach ($this->messages as $message) {
-            $messageArray[] = $message->jsonSerialize();
+        $numberSms = 1;
+        $messagesArray = [];
+        foreach ($this->messages as $item) {
+            $message = $item->jsonSerialize();
+            foreach ($message['abonents'] as &$abonent) {
+                $abonent['number_sms'] = (string) $numberSms;
+                $numberSms++;
+            }
+            $messagesArray[] = $message;
         }
         return [
             "security" => [
                 "login" => $this->login,
                 "password" => $this->password,
-                "message" => $messageArray
-            ]
+            ],
+            "messages" => $messagesArray,
         ];
     }
 }

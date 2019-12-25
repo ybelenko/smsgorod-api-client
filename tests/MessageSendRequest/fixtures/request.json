@@ -1,0 +1,50 @@
+{
+    "security": {
+        "login": "логин",
+        "password": "пароль"
+    },
+    "messages": [
+        {
+            "type": "sms",
+            "sender": "VIRTA",
+            "text": "Текст сообщения 1",
+            "abonents": [
+                {
+                    "phone": "79033256699",
+                    "client_id_sms": "301",
+                    "time_send": null,
+                    "validity_period": null,
+                    "number_sms": "1"
+                },
+                {
+                    "phone": "79033256699",
+                    "client_id_sms": "302",
+                    "time_send": null,
+                    "validity_period": null,
+                    "number_sms": "2"
+                }
+            ]
+        },
+        {
+            "type": "sms",
+            "sender": "VIRTA",
+            "text": "Текст сообщения 2",
+            "abonents": [
+                {
+                    "phone": "79033256699",
+                    "client_id_sms": "303",
+                    "time_send": null,
+                    "validity_period": null,
+                    "number_sms": "3"
+                },
+                {
+                    "phone": "79033256699",
+                    "client_id_sms": "304",
+                    "time_send": null,
+                    "validity_period": null,
+                    "number_sms": "4"
+                }
+            ]
+        }
+    ]
+}
