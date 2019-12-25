@@ -1,0 +1,11 @@
+{
+    "errno": 500,
+    "error": "Some Error text",
+    "error_list": [
+        {
+            "errno": 500,
+            "error": "Some Error text"
+        }
+    ],
+    "status_code": 500
+}
