@@ -92,14 +92,12 @@ final class MessageSendResponse extends ApiResponse implements XMLSerializable, 
      */
     public function jsonSerialize()
     {
-        if ($this->error) {
-            return new \OcheredOnlain\ApiError($this->error, $this->errno);
-        } else {
-            if (count($this->sms) == 1) {
-                return $this->sms[0];
-            } else {
-                return $this->sms;
-            }
-        }
+        return [
+            "sms" => $this->sms,
+            "errno" => $this->errno,
+            "error" => $this->error,
+            "error_list" => $this->errorList,
+            "status_code" => $this->statusCode
+        ];
     }
 }
