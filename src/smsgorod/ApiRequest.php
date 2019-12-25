@@ -59,6 +59,9 @@ abstract class ApiRequest
      */
     protected function post($url, $data)
     {
+        // При этом передаваемый XMLдокумент не должен содержать переводов строки.
+        // Переводы строк в самих данных должны быть заменены на “/n”.
+        $data = preg_replace('~\R~u', '', $data);
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-type: text/xml; charset=utf-8']);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
