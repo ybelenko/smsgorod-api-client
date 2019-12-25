@@ -83,6 +83,7 @@ final class PhoneInfoRequest extends ApiRequest implements XmlSerializable, \Jso
 
     /**
      * Выполняет запрос к АПИ.
+     * @codeCoverageIgnore
      *
      * @return PhoneInfoResponse
      */
@@ -127,16 +128,15 @@ final class PhoneInfoRequest extends ApiRequest implements XmlSerializable, \Jso
      */
     public function jsonSerialize()
     {
-        $messageArray = [];
-        foreach ($this->messages as $message) {
-            $messageArray[] = $message->jsonSerialize();
-        }
+        $phones = array_map(function ($item) {
+            return ['phone' => $item];
+        }, $this->phones);
         return [
             "security" => [
                 "login" => $this->login,
                 "password" => $this->password,
-                "message" => $messageArray
-            ]
+            ],
+            "phones" => $phones,
         ];
     }
 }
