@@ -83,6 +83,7 @@ final class StateRequest extends ApiRequest implements XmlSerializable, \JsonSer
 
     /**
      * Выполняет запрос к АПИ.
+     * @codeCoverageIgnore
      *
      * @return StateInfoRequest
      */
@@ -127,16 +128,15 @@ final class StateRequest extends ApiRequest implements XmlSerializable, \JsonSer
      */
     public function jsonSerialize()
     {
-        $messageArray = [];
-        foreach ($this->messages as $message) {
-            $messageArray[] = $message->jsonSerialize();
-        }
+        $getState = array_map(function ($item) {
+            return ['id_sms' => $item];
+        }, $this->smsIds);
         return [
             "security" => [
                 "login" => $this->login,
                 "password" => $this->password,
-                "message" => $messageArray
-            ]
+            ],
+            "get_state" => $getState,
         ];
     }
 }
