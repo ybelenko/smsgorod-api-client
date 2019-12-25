@@ -1,0 +1,20 @@
+{
+    "security": {
+        "login": "логин",
+        "password": "пароль"
+    },
+    "get_state": [
+        {
+            "id_sms": "3aef8358-e950-45f3-a2b1-a506a3e4017b"
+        },
+        {
+            "id_sms": "23b3b25f-d30f-452f-b0ac-2dae28391306"
+        },
+        {
+            "id_sms": "99f5114a-28aa-4555-8332-4a116955e21e"
+        },
+        {
+            "id_sms": "71cc0959-d2ce-4149-8c47-c1eaf6adec65"
+        }
+    ]
+}

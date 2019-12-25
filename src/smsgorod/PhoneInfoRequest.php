@@ -9,7 +9,7 @@
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 
 namespace Ybelenko\SmsGorod;
@@ -28,7 +28,7 @@ use Ybelenko\SmsGorod\Interfaces\XmlSerializable;
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 final class PhoneInfoRequest extends ApiRequest implements XmlSerializable, \JsonSerializable
 {
@@ -83,6 +83,7 @@ final class PhoneInfoRequest extends ApiRequest implements XmlSerializable, \Jso
 
     /**
      * Выполняет запрос к АПИ.
+     * @codeCoverageIgnore
      *
      * @return PhoneInfoResponse
      */
@@ -127,16 +128,15 @@ final class PhoneInfoRequest extends ApiRequest implements XmlSerializable, \Jso
      */
     public function jsonSerialize()
     {
-        $messageArray = [];
-        foreach ($this->messages as $message) {
-            $messageArray[] = $message->jsonSerialize();
-        }
+        $phones = array_map(function ($item) {
+            return ['phone' => $item];
+        }, $this->phones);
         return [
             "security" => [
                 "login" => $this->login,
                 "password" => $this->password,
-                "message" => $messageArray
-            ]
+            ],
+            "phones" => $phones,
         ];
     }
 }

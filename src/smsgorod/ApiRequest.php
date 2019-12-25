@@ -9,7 +9,7 @@
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 
 namespace Ybelenko\SmsGorod;
@@ -22,7 +22,7 @@ namespace Ybelenko\SmsGorod;
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 abstract class ApiRequest
 {
@@ -49,9 +49,7 @@ abstract class ApiRequest
 
     /**
      * Выполняет POST запрос по указанному URL и возвращает ответ сервера.
-     *
      * Для корректной работы требуется расширение ext - curl.
-     *
      * @codeCoverageIgnore
      *
      * @param string $url Загружаемый URL.
@@ -61,6 +59,9 @@ abstract class ApiRequest
      */
     protected function post($url, $data)
     {
+        // При этом передаваемый XMLдокумент не должен содержать переводов строки.
+        // Переводы строк в самих данных должны быть заменены на “/n”.
+        $data = preg_replace('~\R~u', '', $data);
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-type: text/xml; charset=utf-8']);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -91,16 +92,9 @@ abstract class ApiRequest
             case 'statusCode':
                 return $this->statusCode;
             default:
-                $trace = debug_backtrace();
-                trigger_error(
-                    'Undefined property via __get(): ' . $name .
-                    ' in ' . $trace[0]['file'] .
-                    ' on line ' . $trace[0]['line'],
-                    E_USER_NOTICE
+                throw new \InvalidArgumentException(
+                    sprintf('Переменной %s не существует', $name)
                 );
-                // @codeCoverageIgnoreStart
-                return null;
-                // @codeCoverageIgnoreEnd
         }
     }
 }

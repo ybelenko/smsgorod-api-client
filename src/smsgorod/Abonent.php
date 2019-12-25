@@ -9,7 +9,7 @@
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 
 namespace Ybelenko\SmsGorod;
@@ -24,7 +24,7 @@ use Ybelenko\SmsGorod\Interfaces\XmlSerializable;
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 final class Abonent implements XmlSerializable, \JsonSerializable
 {
@@ -34,28 +34,35 @@ final class Abonent implements XmlSerializable, \JsonSerializable
      *
      * @var string|null
      */
-    public $phone;
+    private $phone;
 
     /**
      * Число. Необязательный параметр, позволяет избежать повторной отправки. Если раннее с этого аккаунта уже было отправлено SMS с таким номером, то повторная отправка не производится, а возвращается номер ранее отправленного SMS.
      *
      * @var string|null
      */
-    public $clientIdSms;
+    private $clientIdSms;
 
     /**
      * Дата и время отправки в формате YYYY-MM-DDHH:MM. Если не задано, то SMS отправляется сразу же.
      *
      * @var string|null
      */
-    public $timeSend;
+    private $timeSend;
 
     /**
      * Дата и время, после которых не будут делаться попытки доставить SMS в формате YYYY-MM-DDHH. Если не задано, то SMS имеет максимальный срок жизни.
      *
      * @var string|null
      */
-    public $validityPeriod;
+    private $validityPeriod;
+
+    /**
+     * Если задано true, то класс не будет выбрасывать исключений.
+     *
+     * @var bool
+     */
+    private $silentMode = false;
 
     /**
      * Создает новый экземпляр класса.
@@ -75,14 +82,74 @@ final class Abonent implements XmlSerializable, \JsonSerializable
         $validityPeriod = null,
         $silentMode = false
     ) {
+        $this->silentMode = $silentMode;
+        $this->__set('phone', $phone);
+        $this->__set('client_id_sms', $clientIdSms);
+        $this->__set('time_send', $timeSend);
+        $this->__set('validity_period', $validityPeriod);
+    }
 
-        if ($silentMode === false && (!is_string($phone) || empty($phone))) {
-            throw new \InvalidArgumentException("Номер телефона обязательный параметр");
+    /**
+     * @internal Задает значение переменных класса.
+     *
+     * @param string $name  Имя переменной, значение которой требуется задать.
+     * @param mixed  $value Новое значение переменной.
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function __set($name, $value)
+    {
+        switch ($name) {
+            case 'phone':
+                if (is_string($value) && !empty($value)) {
+                    $this->phone = $value;
+                } elseif ($this->silentMode !== true) {
+                    throw new \InvalidArgumentException('Номер телефона обязательный параметр');
+                }
+                break;
+            case 'client_id_sms':
+                $this->clientIdSms = $value;
+                break;
+            case 'time_send':
+                $this->timeSend = $value;
+                break;
+            case 'validity_period':
+                $this->validityPeriod = $value;
+                break;
+            default:
+                if ($this->silentMode !== true) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Переменной %s не существует', $name)
+                    );
+                }
         }
-        $this->phone = $phone;
-        $this->clientIdSms = $clientIdSms;
-        $this->timeSend = $timeSend;
-        $this->validityPeriod = $validityPeriod;
+    }
+
+    /**
+     * @internal Возвращает значения read-only переменных класса.
+     *
+     * @param string $name Имя переменной, значение которой требуется вернуть.
+     *
+     * @return mixed|null
+     */
+    public function __get($name)
+    {
+        switch ($name) {
+            case 'phone':
+                return $this->phone;
+            case 'client_id_sms':
+                return $this->clientIdSms;
+            case 'time_send':
+                return $this->timeSend;
+            case 'validity_period':
+                return $this->validityPeriod;
+            default:
+                if ($this->silentMode !== true) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Переменной %s не существует', $name)
+                    );
+                }
+        }
     }
 
     /**

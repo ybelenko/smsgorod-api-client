@@ -1,0 +1,13 @@
+{
+    "errno": 500,
+    "error": "текст ошибки",
+    "error_list": [
+        {
+            "errno": 500,
+            "error": "текст ошибки"
+        }
+    ],
+    "status_code": 500,
+    "sms": [],
+    "money": []
+}

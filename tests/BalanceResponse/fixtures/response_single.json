@@ -1,0 +1,18 @@
+{
+    "errno": 0,
+    "error": "",
+    "error_list": [],
+    "status_code": 200,
+    "sms": [
+        {
+            "area": "Россия",
+            "count": 22
+        }
+    ],
+    "money": [
+        {
+            "currency": "RUB",
+            "value": 29.47
+        }
+    ]
+}

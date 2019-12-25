@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<request>
+    <security>
+        <login value="логин" />
+        <password value="пароль" />
+    </security>
+    <phones>
+        <phone>79612242243</phone>
+        <phone>79612242244</phone>
+    </phones>
+</request>

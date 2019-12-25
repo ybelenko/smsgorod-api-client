@@ -9,7 +9,7 @@
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 
 namespace Ybelenko\SmsGorod;
@@ -24,7 +24,7 @@ use Ybelenko\SmsGorod\Interfaces\XmlSerializable;
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 class ApiResponse implements XmlSerializable, \JsonSerializable
 {
@@ -88,7 +88,7 @@ class ApiResponse implements XmlSerializable, \JsonSerializable
                 $this->statusCode = 200;
             }
         } else {
-            throw new \UnexpectedValueException("Ответ должен быть валидным XML документом");
+            throw new \InvalidArgumentException("Ответ должен быть валидным XML документом");
         }
     }
 
@@ -112,16 +112,9 @@ class ApiResponse implements XmlSerializable, \JsonSerializable
             case 'rawResponse':
                 return $this->rawResponse;
             default:
-                $trace = debug_backtrace();
-                trigger_error(
-                    'Undefined property via __get(): ' . $name .
-                    ' in ' . $trace[0]['file'] .
-                    ' on line ' . $trace[0]['line'],
-                    E_USER_NOTICE
+                throw new \InvalidArgumentException(
+                    sprintf("Переменной %s не существует", $name)
                 );
-                // @codeCoverageIgnoreStart
-                return null;
-                // @codeCoverageIgnoreEnd
         }
     }
 
@@ -132,7 +125,7 @@ class ApiResponse implements XmlSerializable, \JsonSerializable
      */
     public function __toString()
     {
-        return $this->rawResponse;
+        return $this->xmlSerialize()->asXML();
     }
 
     /**

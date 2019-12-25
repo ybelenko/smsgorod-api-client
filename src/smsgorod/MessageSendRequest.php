@@ -9,7 +9,7 @@
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 
 namespace Ybelenko\SmsGorod;
@@ -28,7 +28,7 @@ use Ybelenko\SmsGorod\Interfaces\XmlSerializable;
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 final class MessageSendRequest extends ApiRequest implements XmlSerializable, \JsonSerializable
 {
@@ -83,6 +83,7 @@ final class MessageSendRequest extends ApiRequest implements XmlSerializable, \J
 
     /**
      * Выполняет запрос к АПИ.
+     * @codeCoverageIgnore
      *
      * @return MessageSendResponse
      */
@@ -134,16 +135,22 @@ final class MessageSendRequest extends ApiRequest implements XmlSerializable, \J
      */
     public function jsonSerialize()
     {
-        $messageArray = [];
-        foreach ($this->messages as $message) {
-            $messageArray[] = $message->jsonSerialize();
+        $numberSms = 1;
+        $messagesArray = [];
+        foreach ($this->messages as $item) {
+            $message = $item->jsonSerialize();
+            foreach ($message['abonents'] as &$abonent) {
+                $abonent['number_sms'] = (string) $numberSms;
+                $numberSms++;
+            }
+            $messagesArray[] = $message;
         }
         return [
             "security" => [
                 "login" => $this->login,
                 "password" => $this->password,
-                "message" => $messageArray
-            ]
+            ],
+            "messages" => $messagesArray,
         ];
     }
 }

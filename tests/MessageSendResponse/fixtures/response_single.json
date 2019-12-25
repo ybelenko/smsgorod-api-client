@@ -1,0 +1,17 @@
+{
+    "errno": 0,
+    "error": "",
+    "error_list": [],
+    "status_code": 200,
+    "sms": [
+        {
+            "state": "send",
+            "number_sms": "2",
+            "id_sms": "2779500190",
+            "id_turn": "",
+            "parts": 1,
+            "price": 0,
+            "price_sum": 0
+        }
+    ]
+}

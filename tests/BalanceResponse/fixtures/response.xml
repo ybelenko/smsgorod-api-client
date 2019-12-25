@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<response>
+    <sms area="Россия">22</sms>
+    <sms area="МТС">19</sms>
+    <sms area="Мегафон">19</sms>
+    <sms area="Теле2">19</sms>
+    <sms area="Мотив">42</sms>
+    <sms area="Билайн">21</sms>
+    <sms area="SMARTS">21</sms>
+    <sms area="Остальные">19</sms>
+    <money currency="RUB">29.47</money>
+</response>

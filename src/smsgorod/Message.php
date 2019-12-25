@@ -9,7 +9,7 @@
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 
 namespace Ybelenko\SmsGorod;
@@ -28,7 +28,7 @@ use Ybelenko\SmsGorod\Interfaces\XmlSerializable;
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 final class Message implements XmlSerializable, \JsonSerializable
 {
@@ -71,14 +71,21 @@ final class Message implements XmlSerializable, \JsonSerializable
      *
      * @var string|null
      */
-    public $text;
+    private $text;
 
     /**
      * Отправитель SMS. Именно это значение будет выводиться на телефоне абонента в поле от кого SMS.
      *
      * @var string|null
      */
-    public $sender;
+    private $sender;
+
+    /**
+     * Если задано true, то класс не будет выбрасывать исключений.
+     *
+     * @var bool
+     */
+    private $silentMode = false;
 
     /**
      * Создает новый экземпляр класса.
@@ -91,14 +98,13 @@ final class Message implements XmlSerializable, \JsonSerializable
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct($type, $text, array $abonents, $sender, $silentMode = false)
+    public function __construct($type, $text, $abonents, $sender, $silentMode = false)
     {
-        $this->type = $type;
-        $this->text = $text;
-        $this->abonents = array_filter($abonents, function ($var) {
-            return (bool)($var instanceof Abonent);
-        });
-        $this->sender = $sender;
+        $this->silentMode = $silentMode;
+        $this->__set('type', $type);
+        $this->__set('text', $text);
+        $this->__set('abonents', $abonents);
+        $this->__set('sender', $sender);
     }
 
     /**
@@ -113,10 +119,17 @@ final class Message implements XmlSerializable, \JsonSerializable
     {
         switch ($name) {
             case 'type':
-                if (is_string($value) && in_array($value, [FLASH_SMS, SMS, WAPPUSH, VCARD], true)) {
+                if (is_string($value) && in_array($value, [self::FLASH_SMS, self::SMS, self::WAPPUSH, self::VCARD], true)) {
                     $this->type = $value;
-                } else {
-                    throw new \InvalidArgumentException("Тип сообщения может быть flashsms, sms, wappush, vcard");
+                } elseif ($this->silentMode !== true) {
+                    throw new \InvalidArgumentException("Тип сообщения может быть flash_sms, sms, wappush, vcard");
+                }
+                break;
+            case 'text':
+                if (is_string($value) && $value !== '') {
+                    $this->text = $value;
+                } elseif ($this->silentMode !== true) {
+                    throw new \InvalidArgumentException("Текст сообщения не должен быть пустым");
                 }
                 break;
             case 'abonents':
@@ -124,18 +137,23 @@ final class Message implements XmlSerializable, \JsonSerializable
                     $this->abonents = array_filter($value, function ($var) {
                         return (bool)($var instanceof Abonent);
                     });
-                } else {
+                } elseif ($this->silentMode !== true) {
                     throw new \InvalidArgumentException("Abonents must be an array");
                 }
                 break;
+            case 'sender':
+                if (!empty((string) $value)) {
+                    $this->sender = (string) $value;
+                } elseif ($this->silentMode !== true) {
+                    throw new \InvalidArgumentException("Отправитель сообщения не должен быть пустой строкой");
+                }
+                break;
             default:
-                $trace = debug_backtrace();
-                trigger_error(
-                    'Undefined property via __get(): ' . $name .
-                    ' in ' . $trace[0]['file'] .
-                    ' on line ' . $trace[0]['line'],
-                    E_USER_NOTICE
-                );
+                if ($this->silentMode !== true) {
+                    throw new \InvalidArgumentException(
+                        sprintf("Переменной %s не существует", $name)
+                    );
+                }
         }
     }
 
@@ -151,17 +169,18 @@ final class Message implements XmlSerializable, \JsonSerializable
         switch ($name) {
             case 'type':
                 return $this->type;
+            case 'text':
+                return $this->text;
             case 'abonents':
                 return $this->abonents;
+            case 'sender':
+                return $this->sender;
             default:
-                $trace = debug_backtrace();
-                trigger_error(
-                    'Undefined property via __get(): ' . $name .
-                    ' in ' . $trace[0]['file'] .
-                    ' on line ' . $trace[0]['line'],
-                    E_USER_NOTICE
-                );
-                return null;
+                if ($this->silentMode !== true) {
+                    throw new \InvalidArgumentException(
+                        sprintf("Переменной %s не существует", $name)
+                    );
+                }
         }
     }
 
@@ -187,8 +206,10 @@ final class Message implements XmlSerializable, \JsonSerializable
         $root->addChild("sender", $this->sender);
         $root->addChild("text", $this->text);
         $rootDom = dom_import_simplexml($root);
-        foreach ($this->abonents as $abonent) {
-            $abonentDom = dom_import_simplexml($abonent->xmlSerialize());
+        for ($a = 1; $a - 1 < count($this->abonents); $a++) {
+            $item = $this->abonents[$a - 1];
+            $abonentDom = dom_import_simplexml($item->xmlSerialize());
+            $abonentDom->setAttribute('number_sms', $a);
             $rootDom->appendChild($rootDom->ownerDocument->importNode($abonentDom, true));
         }
         return $root;
@@ -202,16 +223,16 @@ final class Message implements XmlSerializable, \JsonSerializable
     public function jsonSerialize()
     {
         $abonents = [];
-        for ($a = 1; $a < count($this->abonents) -1; $a++) {
-            $abonent = $this->abonents[$a]->jsonSerialize();
+        for ($a = 1; $a - 1 < count($this->abonents); $a++) {
+            $abonent = $this->abonents[$a - 1]->jsonSerialize();
             $abonent["number_sms"] = $a;
-            array_push($abonents, $abonent);
+            $abonents[] = $abonent;
         }
         return [
             "type" => $this->type,
             "sender" => $this->sender,
             "text" => $this->text,
-            "abonent" => $abonents
+            "abonents" => $abonents
         ];
     }
 }

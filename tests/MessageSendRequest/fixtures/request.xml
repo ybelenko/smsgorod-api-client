@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<request>
+    <security>
+        <login value="логин" />
+        <password value="пароль" />
+    </security>
+    <message type="sms">
+        <sender>VIRTA</sender>
+        <text>Текст сообщения 1</text>
+        <abonent phone="79033256699" number_sms="1" client_id_sms="301" />
+        <abonent phone="79033256699" number_sms="2" client_id_sms="302" />
+    </message>
+    <message type="sms">
+        <sender>VIRTA</sender>
+        <text>Текст сообщения 2</text>
+        <abonent phone="79033256699" number_sms="3" client_id_sms="303" />
+        <abonent phone="79033256699" number_sms="4" client_id_sms="304" />
+    </message>
+</request>

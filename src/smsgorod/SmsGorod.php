@@ -9,7 +9,7 @@
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 
 namespace Ybelenko\SmsGorod;
@@ -33,7 +33,7 @@ namespace Ybelenko\SmsGorod;
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 final class SmsGorod
 {
@@ -75,10 +75,9 @@ final class SmsGorod
 
     /**
      * Выполняет запрос информации по номеру телефона.
+     * @codeCoverageIgnore
      *
      * @param array $phones Массив с номерами телефонов.
-     *
-     * @api
      *
      * @return PhoneInfoResponse
      */
@@ -90,6 +89,7 @@ final class SmsGorod
 
     /**
      * Выполняет запрос статуса отправленного сообщения.
+     * @codeCoverageIgnore
      *
      * @param array $smsIds Массив с идентификаторами отправленных сообщений.
      *
@@ -103,6 +103,7 @@ final class SmsGorod
 
     /**
      * Выполняет запрос время сервера.
+     * @codeCoverageIgnore
      *
      * @return TimeResponse
      */
@@ -114,6 +115,7 @@ final class SmsGorod
 
     /**
      * Выполняет запрос баланса.
+     * @codeCoverageIgnore
      *
      * @return BalanceResponse
      */
@@ -125,6 +127,7 @@ final class SmsGorod
 
     /**
      * Выполняет запрос на отправку сообщений.
+     * @codeCoverageIgnore
      *
      * @param array $messages Массив с подготовленными сообщениями для отправки.
      *

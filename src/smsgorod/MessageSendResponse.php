@@ -9,7 +9,7 @@
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 
 namespace Ybelenko\SmsGorod;
@@ -31,7 +31,7 @@ use Ybelenko\SmsGorod\Interfaces\XmlSerializable;
  * @author   Yuriy Belenko <yura-bely@mail.ru>
  * @license  MIT License https://github.com/ybelenko/smsgorod-api-client/blob/master/LICENSE
  * @link     https://github.com/ybelenko/smsgorod-api-client
- * @version  v1.0.0
+ * @version  v1.1.0
  */
 final class MessageSendResponse extends ApiResponse implements XMLSerializable, \JsonSerializable
 {
@@ -92,14 +92,12 @@ final class MessageSendResponse extends ApiResponse implements XMLSerializable, 
      */
     public function jsonSerialize()
     {
-        if ($this->error) {
-            return new \OcheredOnlain\ApiError($this->error, $this->errno);
-        } else {
-            if (count($this->sms) == 1) {
-                return $this->sms[0];
-            } else {
-                return $this->sms;
-            }
-        }
+        return [
+            "sms" => $this->sms,
+            "errno" => $this->errno,
+            "error" => $this->error,
+            "error_list" => $this->errorList,
+            "status_code" => $this->statusCode
+        ];
     }
 }
