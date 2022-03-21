@@ -6,23 +6,23 @@
         {
             "phone": "79033256699",
             "number_sms": 1,
-            "client_id_sms": 101,
+            "client_id_sms": "101",
             "time_send": "2001-12-31 12:34",
             "validity_period": "2001-12-31 15:34"
         },
         {
             "phone": "79033256699",
             "number_sms": 2,
-            "client_id_sms": 102,
+            "client_id_sms": "102",
             "time_send": "2001-12-31 12:35",
-            "validity_period": ""
+            "validity_period": null
         },
         {
             "phone": "79033256699",
             "number_sms": 3,
-            "client_id_sms": 110,
-            "time_send": "",
-            "validity_period": ""
+            "client_id_sms": "110",
+            "time_send": null,
+            "validity_period": null
         }
     ]
 }

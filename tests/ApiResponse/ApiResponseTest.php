@@ -25,11 +25,11 @@ class ApiResponseTest extends TestCase{
         $res = new ApiResponse($rawResponse);
         $this->assertJsonStringEqualsJsonFile($expectedJsonLink, json_encode($res));
         $this->assertXmlStringEqualsXmlFile($responseLink, (string) $res);
-        $this->assertInternalType('integer', $res->errno);
-        $this->assertInternalType('string', $res->error);
-        $this->assertInternalType('integer', $res->statusCode);
-        $this->assertInternalType('array', $res->errorList);
-        $this->assertInternalType('string', $res->rawResponse);
+        $this->assertIsInt($res->errno);
+        $this->assertIsString($res->error);
+        $this->assertIsInt($res->statusCode);
+        $this->assertIsArray($res->errorList);
+        $this->assertIsString($res->rawResponse);
 
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Переменной silentMode не существует');

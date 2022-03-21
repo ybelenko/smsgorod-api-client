@@ -6,7 +6,7 @@
         {
             "phone": "79033256699",
             "number_sms": 1,
-            "client_id_sms": 101,
+            "client_id_sms": "101",
             "time_send": "2001-12-31 12:34",
             "validity_period": "2001-12-31 15:34"
         }

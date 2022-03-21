@@ -22,8 +22,8 @@ class StateResponseTest extends TestCase {
         $rawResponse = file_get_contents($responseLink);
         $res = new StateResponse($rawResponse);
         $this->assertJsonStringEqualsJsonFile($expectedJsonLink, json_encode($res));
-        $this->assertInternalType('array', $res->state);
-        $this->assertInternalType('integer', $res->statusCode);
+        $this->assertIsArray($res->state);
+        $this->assertIsInt($res->statusCode);
     }
 
     public function provideResponses()

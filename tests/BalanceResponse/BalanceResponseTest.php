@@ -22,9 +22,9 @@ class BalanceReponseTest extends TestCase{
         $rawResponse = file_get_contents($responseLink);
         $res = new BalanceResponse($rawResponse);
         $this->assertJsonStringEqualsJsonFile($expectedJsonLink, json_encode($res));
-        $this->assertInternalType('array', $res->sms);
-        $this->assertInternalType('array', $res->money);
-        $this->assertInternalType('integer', $res->statusCode);
+        $this->assertIsArray($res->sms);
+        $this->assertIsArray($res->money);
+        $this->assertIsInt($res->statusCode);
     }
 
     public function provideResponses()

@@ -22,8 +22,8 @@ class MessageSendResponseTest extends TestCase {
         $rawResponse = file_get_contents($responseLink);
         $res = new MessageSendResponse($rawResponse);
         $this->assertJsonStringEqualsJsonFile($expectedJsonLink, json_encode($res));
-        $this->assertInternalType('array', $res->sms);
-        $this->assertInternalType('integer', $res->statusCode);
+        $this->assertIsArray($res->sms);
+        $this->assertIsInt($res->statusCode);
     }
 
     public function provideResponses()

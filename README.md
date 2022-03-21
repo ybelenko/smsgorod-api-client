@@ -10,7 +10,7 @@
 
 ## Требования
 - Любой вебсервер, например Apache
-- PHP ^5.6 || ^7.0
+- PHP ^7.0 || ^8.0
 - PHP extensions:
     - ext-curl
     - lib-curl

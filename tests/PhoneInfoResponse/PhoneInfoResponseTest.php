@@ -22,8 +22,8 @@ class PhoneInfoResponseTest extends TestCase {
         $rawResponse = file_get_contents($responseLink);
         $res = new PhoneInfoResponse($rawResponse);
         $this->assertJsonStringEqualsJsonFile($expectedJsonLink, json_encode($res));
-        $this->assertInternalType('array', $res->phones);
-        $this->assertInternalType('integer', $res->statusCode);
+        $this->assertIsArray($res->phones);
+        $this->assertIsInt($res->statusCode);
     }
 
     public function provideResponses()
