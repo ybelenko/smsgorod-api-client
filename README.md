@@ -1,7 +1,7 @@
 # SMSGorod API Client
 
 [![Latest Stable Version](https://poser.pugx.org/ybelenko/smsgorod-api-client/v/stable)](https://packagist.org/packages/ybelenko/smsgorod-api-client)
-[![Build Status](https://travis-ci.org/ybelenko/smsgorod-api-client.svg?branch=master)](https://travis-ci.org/ybelenko/smsgorod-api-client)
+[![Build Status](https://github.com/ybelenko/smsgorod-api-client/actions/workflows/ci.yml/badge.svg)](https://github.com/ybelenko/smsgorod-api-client/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/ybelenko/smsgorod-api-client/badge.svg?branch=master)](https://coveralls.io/github/ybelenko/smsgorod-api-client?branch=master)
 [![License](https://poser.pugx.org/ybelenko/smsgorod-api-client/license)](https://packagist.org/packages/ybelenko/smsgorod-api-client)
 
